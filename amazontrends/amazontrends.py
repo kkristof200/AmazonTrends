@@ -25,6 +25,7 @@ class AmazonTrends:
         cls,
         category: Category = Category.ALL_DEPARTMENTS,
         locale: str = 'en_US',
+        max_results_per_letter: int = 10,
         random_ua: bool = True,
         debug: bool = False
     ) -> List[str]:
@@ -36,6 +37,7 @@ class AmazonTrends:
                     category,
                     str(char),
                     locale,
+                    max_results_per_letter,
                     random_ua,
                     debug
                 )
@@ -52,6 +54,7 @@ class AmazonTrends:
         category: Category,
         letter: str,
         locale: str,
+        max_results: int,
         random_ua: bool,
         debug: bool
     ) -> List[str]:
@@ -69,6 +72,9 @@ class AmazonTrends:
 
                 if suggestion not in suggestions:
                     suggestions.append(suggestion)
+
+                    if len(suggestions) >= max_results:
+                        return suggestions
 
             return suggestions
         except:
