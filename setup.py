@@ -9,7 +9,7 @@ else:
 
 setuptools.setup(
     name="amazontrends",
-    version="0.0.3",
+    version="0.0.4",
     author="Kristof",
     description="amazontrends",
     long_description=long_description,

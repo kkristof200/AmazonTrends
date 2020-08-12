@@ -26,12 +26,13 @@ class AmazonTrends:
         category: Category = Category.ALL_DEPARTMENTS,
         locale: str = 'en_US',
         max_results_per_letter: int = 10,
+        search_letters: str = 'abcdefghijklmnopqrstuvwxyz',
         random_ua: bool = True,
         debug: bool = False
     ) -> List[str]:
         suggestions = []
 
-        for char in 'abcdefghijklmnopqrstuvwxyz':
+        for char in search_letters:
             suggestions.extend(
                 cls.__get_suggestions(
                     category,
