@@ -1,7 +1,7 @@
 # --------------------------------------------------------------- Imports ---------------------------------------------------------------- #
 
 # System
-from typing import List
+from typing import List, Dict, Union
 
 # Pip
 from kcu import request
@@ -28,24 +28,30 @@ class AmazonTrends:
         max_results_per_letter: int = 10,
         search_letters: str = 'abcdefghijklmnopqrstuvwxyz',
         random_ua: bool = True,
+        return_dict: bool = False,
         debug: bool = False
-    ) -> List[str]:
-        suggestions = []
+    ) -> Union[List[str], Dict[str, List[str]]]:
+        suggestions = {}
 
         for char in search_letters:
-            suggestions.extend(
-                cls.__get_suggestions(
-                    category,
-                    str(char),
-                    locale,
-                    max_results_per_letter,
-                    random_ua,
-                    debug
-                )
+            suggestions[str(char)] = cls.__get_suggestions(
+                category,
+                str(char),
+                locale,
+                max_results_per_letter,
+                random_ua,
+                debug
             )
 
-        return suggestions
+        if return_dict:
+            return suggestions
+        else:
+            suggestions_ = []
 
+            for v in suggestions.values():
+                suggestions_.extend(v)
+
+            return suggestions_
 
     # ------------------------------------------------------- Private methods -------------------------------------------------------- #
 
