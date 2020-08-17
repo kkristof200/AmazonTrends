@@ -1,7 +1,7 @@
 # --------------------------------------------------------------- Imports ---------------------------------------------------------------- #
 
 # System
-from typing import List, Dict, Union
+from typing import Optional, List, Dict, Union
 
 # Pip
 from kcu import request
@@ -27,6 +27,7 @@ class AmazonTrends:
         locale: str = 'en_US',
         max_results_per_letter: int = 10,
         search_letters: str = 'abcdefghijklmnopqrstuvwxyz',
+        user_agent: Optional[str] = None,
         random_ua: bool = True,
         return_dict: bool = False,
         debug: bool = False
@@ -39,6 +40,7 @@ class AmazonTrends:
                 str(char),
                 locale,
                 max_results_per_letter,
+                user_agent,
                 random_ua,
                 debug
             )
@@ -62,6 +64,7 @@ class AmazonTrends:
         letter: str,
         locale: str,
         max_results: int,
+        user_agent: Optional[str],
         random_ua: bool,
         debug: bool
     ) -> List[str]:
@@ -72,7 +75,7 @@ class AmazonTrends:
         suggestions = []
 
         try:
-            j = request.get(url, max_request_try_count=2, sleep_time=0.25, fake_useragent=random_ua, debug=debug).json()
+            j = request.get(url, max_request_try_count=2, sleep_time=0.25, user_agent=user_agent, fake_useragent=random_ua, debug=debug).json()
 
             for suggestion in j['suggestions']:
                 suggestion = suggestion['value']
